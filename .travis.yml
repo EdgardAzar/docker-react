@@ -7,3 +7,16 @@ before_install:
 
 script:
   - docker run edgard/frontend npm run test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2" #can be found in the link of the app
+  app: "react-app"
+  env: "Reactapp-env"
+  bucket_name: "elasticbeanstalk-us-east-2-615166379970" #we search for s3 and get the bucket name
+  bucket_path: "react-app" #similar to app name
+  on:
+    branch: master #only when we push code to master version it is time to deploy
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
